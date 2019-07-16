@@ -1,6 +1,5 @@
 (ns alphabet-cipher.coder)
 
-
 (defn tochar [x] 
   (if (> x (int \Z)) 
     (char (+ (int \A) (- (dec x) (int \Z)))) 
@@ -69,27 +68,26 @@
   )
 )
 
-(defn shortest-substring [pattern string]
+(defn shortest-repeated-string [pattern string]
   (if (or (empty? (clojure.string/split string (re-pattern pattern)))
           (and (map empty? (drop-last (clojure.string/split string (re-pattern pattern))))
                (.contains pattern (last (clojure.string/split string (re-pattern pattern))))
           )
       )
     pattern
-    (shortest-substring (str pattern (nth string (count pattern))) string)
+    (shortest-repeated-string (str pattern (nth string (count pattern))) string)
   )
 )
 
 (defn decipher [cipher message]
-    (loop [[k & key] (clojure.string/upper-case cipher)
+    (loop [[c & ciph] (clojure.string/upper-case cipher)
            [m & mes] (clojure.string/upper-case message)
            secret []]
-      (if (nil? k) 
+      (if (nil? c) 
         (let [result (clojure.string/lower-case (apply str secret))]
-          (shortest-substring (str (first result)) result)
+          (shortest-repeated-string (str (first result)) result)
         )
-        (recur key mes (conj secret (decode-letter m k)))
+        (recur ciph mes (conj secret (decode-letter m c)))
       )
     )
 )
-

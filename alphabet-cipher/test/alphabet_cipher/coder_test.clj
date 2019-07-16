@@ -16,6 +16,18 @@
     (is (= "meetmebythetree"
            (decode "scones" "egsgqwtahuiljgs")))))
 
+(deftest test-shortest-repeated-string
+  (testing "can extract shortest repeated string for secret keywords"
+    (is (= "scones"
+            (shortest-repeated-string "s" "sconessconessconessconessco")))
+    (is (= "abcabcx"
+            (shortest-repeated-string "a" "abcabcxabcabcxabcabcxabcabcx")))
+    (is (= "vigilance"
+            (shortest-repeated-string "v" "vigilancevigilancevigilancevigilance")))
+  )
+)
+
+
 (deftest test-decipher
   (testing "can extract the secret keyword given an encrypted message and the original message"
     (is (= "vigilance"
