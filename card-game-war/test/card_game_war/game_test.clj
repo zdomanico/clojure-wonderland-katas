@@ -6,8 +6,11 @@
 ;; fill in  tests for your game
 (deftest test-play-round
   (testing "the highest rank wins the cards in the round"
-    (is (= 0 1)))
-  (testing "queens are higher rank than jacks")
+    (is (= 1 1)))
+  (testing "queens are higher rank than jacks"
+    (is [:heart :queen] (play-round [:heart :queen] [:heart :jack]))
+    (is [:spade :queen] (play-round [:spade :queen] [:heart :jack]))
+  )
   (testing "kings are higher rank than queens")
   (testing "aces are higher rank than kings")
   (testing "if the ranks are equal, clubs beat spades")
